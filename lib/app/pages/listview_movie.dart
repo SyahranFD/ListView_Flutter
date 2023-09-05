@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'movie.dart';
-import 'genre.dart';
+import 'package:listview_movie/app/widget/widget.dart';
+import 'package:listview_movie/helpers/themes.dart';
+import '../model/movie.dart';
+import '../model/genre.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 
 class ListViewMovie extends StatefulWidget {
   const ListViewMovie({Key? key}) : super(key: key);
@@ -75,57 +78,31 @@ class _ListViewMovieState extends State<ListViewMovie> {
     genreMovie?.add(genre6);
   }
 
-  Widget textOnlyWidth(String textValue, double fontSize, FontWeight fontWeight, Color color, double width, double marginBottom, double marginTop, int maxLines) {
-    return Container(
-      margin: EdgeInsets.only(bottom: marginBottom, top: marginTop),
-      width: width,
-      child: Text(
-        textValue,
-        style: TextStyle(
-          color: color,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-        ),
-        maxLines: maxLines,
-        overflow: TextOverflow.ellipsis,
-      ),
-    );
-  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFF131216),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(10),
+        child: Container(
+          child: Column(
+            children: [
+              SizedBox(height: 40),
 
-  Widget textWithWidthHeight(String textValue, double fontSize, FontWeight fontWeight, Color color, double width, double height, double marginBottom, double marginTop, int maxLines) {
-    return Container(
-      margin: EdgeInsets.only(bottom: marginBottom, top: marginTop),
-      width: width,
-      height: height,
-      child: Text(
-        textValue,
-        style: TextStyle(
-          color: color,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-        ),
-        maxLines: maxLines,
-        overflow: TextOverflow.ellipsis,
-      ),
-    );
-  }
+              textMarginLeftRight(textValue: "Favorite Movies", textStyle: tsTitlePage, marginRight: 0, marginLeft: 0),
 
-  Widget textNoWidthHeight(String textValue, double fontSize, FontWeight fontWeight, Color color, double marginRight, double marginLeft, double marginTop, double marginBottom) {
-    return Container(
-      margin: EdgeInsets.only(right: marginRight, left: marginLeft, top: marginTop, bottom: marginBottom),
-      child: Text(
-        textValue,
-        style: TextStyle(
-          color: color,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
+              SizedBox(height: 20),
+
+              listGenreHorizontal(),
+
+              SizedBox(height: 5),
+
+              listMovieVertical(),
+            ],
+          ),
         ),
       ),
     );
-  }
-
-  Widget imgSVG(String img) {
-    return SvgPicture.asset('assets/images/' + img);
   }
 
   int selectedGenreIndex = 0;
@@ -192,49 +169,36 @@ class _ListViewMovieState extends State<ListViewMovie> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
+
                 SizedBox(width: 16),
 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    textOnlyWidth(favoriteMovie![index].title, 16, FontWeight.bold, Colors.white, 180, 0, 0, 2),
-                    textOnlyWidth(favoriteMovie![index].genre, 14, FontWeight.normal, Color(0xFF878787), 180, 15, 0, 2),
-                    Row(
-                      children: [
-                        imgSVG("rating_star.svg"),
-                        textNoWidthHeight(favoriteMovie![index].rating, 14, FontWeight.normal, Colors.white, 4, 3, 0, 0),
-                        imgSVG("circle_white.svg"),
-                        textNoWidthHeight(favoriteMovie![index].release, 14, FontWeight.normal, Colors.white, 4, 4, 0, 0),
-                        imgSVG("circle_white.svg"),
-                        textNoWidthHeight(favoriteMovie![index].hour, 14, FontWeight.normal, Colors.white, 4, 4, 0, 0),
-                      ],
-                    ),
-                    textWithWidthHeight(favoriteMovie![index].description, 14, FontWeight.normal, Colors.white, 180, 70, 0, 15, 3)
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      textMaxLines(textValue: favoriteMovie![index].title, textStyle: tsTitleListMovie, maxLines: 1),
+                      Text(favoriteMovie![index].genre, style: tsGenreVertical),
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          SvgPicture.asset(iconRatingStar),
+                          textMarginLeftRight(textValue: favoriteMovie![index].rating, textStyle: tsRowDetail, marginRight: 4, marginLeft: 3),
+                          SvgPicture.asset(iconCircleWhite),
+                          textMarginLeftRight(textValue: favoriteMovie![index].release, textStyle: tsRowDetail, marginRight: 4, marginLeft: 4),
+                          SvgPicture.asset(iconCircleWhite),
+                          textMarginLeftRight(textValue: favoriteMovie![index].hour, textStyle: tsRowDetail, marginRight: 4, marginLeft: 4)
+                        ],
+                      ),
+                      SizedBox(height: 15),
+                      textMaxLines(textValue: favoriteMovie![index].description, textStyle: tsDescription, maxLines: 3),
+                    ],
+                  ),
                 ),
               ],
             ),
           );
         },
-      ),
-    );
-  }
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF131216),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            textNoWidthHeight("Favorite Movies", 24, FontWeight.bold, Colors.white, 0, 0, 40, 20),
-            listGenreHorizontal(),
-            listMovieVertical()
-          ],
-        ),
       ),
     );
   }
