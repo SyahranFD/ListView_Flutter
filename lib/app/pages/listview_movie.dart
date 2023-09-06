@@ -25,7 +25,7 @@ class _ListViewMovieState extends State<ListViewMovie> {
     Movie movie1 = new Movie(
         "The Greatest Showman",
         "Musical/Drama",
-        "7.5",
+        "3.7",
         "29 Dec 2017",
         "1h 45m",
         "P T Barnum becomes a worldwide sensation in the show business. His imagination and innovative ideas take him to the top of his game.",
@@ -34,7 +34,7 @@ class _ListViewMovieState extends State<ListViewMovie> {
     Movie movie2 = new Movie(
         "BoBoiBoy: The Movie",
         "Action/Sci-fi",
-        "6.6",
+        "3.3",
         "13 Apr 2016",
         "1h 40m",
         "BoBoiBoy and his friends embark on a mission to stop alien treasure hunters from getting hold of a powerful device.",
@@ -43,7 +43,7 @@ class _ListViewMovieState extends State<ListViewMovie> {
     Movie movie3 = new Movie(
         "Charlie and the Chocolate Factory",
         "Fantasy/Family",
-        "6.7",
+        "3.3",
         "10 Jul 2005",
         "1h 55m",
         "Charlie, a young boy from an impoverished family, and four other kids win a tour of an amazing chocolate factory run by an imaginative chocolatier, Willy Wonka, and his staff of Oompa-Loompas.",
@@ -52,7 +52,7 @@ class _ListViewMovieState extends State<ListViewMovie> {
     Movie movie4 = new Movie(
         "Kung Fu Panda 3",
         "Family/Comedy",
-        "7.1",
+        "3.5",
         "8 Mar 2016",
         "1h 35m",
         "The Dragon Warrior, Po, has to deal with challenges galore when circumstances compel him to train a bunch of awkward pandas in martial arts so that they can trounce Kai, a wicked supernatural warrior.",
@@ -89,7 +89,7 @@ class _ListViewMovieState extends State<ListViewMovie> {
             children: [
               SizedBox(height: 40),
 
-              textMarginLeftRight(textValue: "Favorite Movies", textStyle: tsTitlePage, marginRight: 0, marginLeft: 0),
+              Text("Favorite Movies", style: tsTitlePage),
 
               SizedBox(height: 20),
 
@@ -116,7 +116,7 @@ class _ListViewMovieState extends State<ListViewMovie> {
         itemBuilder: (BuildContext context, int index) {
           bool isSelected = index == selectedGenreIndex;
 
-          return GestureDetector(
+          return InkWell(
             onTap: () {
               setState(() {
                 selectedGenreIndex = index;
@@ -179,18 +179,25 @@ class _ListViewMovieState extends State<ListViewMovie> {
                     children: [
                       textMaxLines(textValue: favoriteMovie![index].title, textStyle: tsTitleListMovie, maxLines: 1),
                       Text(favoriteMovie![index].genre, style: tsGenreVertical),
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
                       Row(
                         children: [
-                          SvgPicture.asset(iconRatingStar),
-                          textMarginLeftRight(textValue: favoriteMovie![index].rating, textStyle: tsRowDetail, marginRight: 4, marginLeft: 3),
-                          SvgPicture.asset(iconCircleWhite),
-                          textMarginLeftRight(textValue: favoriteMovie![index].release, textStyle: tsRowDetail, marginRight: 4, marginLeft: 4),
-                          SvgPicture.asset(iconCircleWhite),
-                          textMarginLeftRight(textValue: favoriteMovie![index].hour, textStyle: tsRowDetail, marginRight: 4, marginLeft: 4)
+                          Text(favoriteMovie![index].rating, style: tsDetail),
+                          SizedBox(width: 4),
+                          ratingBar(double.parse(favoriteMovie![index].rating)),
                         ],
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(favoriteMovie![index].release, style: tsDetail),
+                          SizedBox(width: 4),
+                          SvgPicture.asset(iconCircleWhite),
+                          SizedBox(width: 4),
+                          Text(favoriteMovie![index].hour, style: tsDetail),
+                        ],
+                      ),
+                      SizedBox(height: 10),
                       textMaxLines(textValue: favoriteMovie![index].description, textStyle: tsDescription, maxLines: 3),
                     ],
                   ),

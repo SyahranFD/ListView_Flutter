@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
     fontSize: 14
   );
 
-  TextStyle tsRowDetail = const TextStyle(
+  TextStyle tsDetail = const TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.normal,
     fontSize: 14

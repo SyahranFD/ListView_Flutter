@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 Widget textMaxLines({
   required String textValue,
@@ -11,22 +12,6 @@ Widget textMaxLines({
       style: textStyle,
       maxLines: maxLines,
       overflow: TextOverflow.ellipsis,
-    ),
-  );
-}
-
-Widget textMarginLeftRight({
-  required String textValue,
-  required TextStyle textStyle,
-  required double marginLeft,
-  required double marginRight
-
-}) {
-  return Container(
-    margin: EdgeInsets.only(left: marginLeft, right: marginRight),
-    child: Text(
-      textValue,
-      style: textStyle,
     ),
   );
 }
@@ -50,5 +35,24 @@ Widget textFormFieldLogin({required String label, required bool isObsecure}) {
         labelStyle: TextStyle(color: Colors.white),
       ),
     ),
+  );
+}
+
+Widget ratingBar (double rating) {
+  return RatingBar.builder(
+    initialRating: rating,
+    minRating: 1,
+    direction: Axis.horizontal,
+    allowHalfRating: true,
+    itemCount: 5,
+    itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+    itemSize: 20,
+    itemBuilder: (context, _) => Icon(
+      Icons.star,
+      color: Colors.amber,
+    ),
+    onRatingUpdate: (rating) {
+      print(rating);
+    },
   );
 }
